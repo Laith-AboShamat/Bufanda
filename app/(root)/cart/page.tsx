@@ -18,8 +18,6 @@ const Cart = () => {
     street: "",
     city: "",
     state: "",
-    postalCode: "",
-    country: "",
   });
 
   const total = cart.cartItems.reduce(
@@ -40,10 +38,7 @@ const Cart = () => {
         router.push("sign-in");
       } else if (
         !shippingAddress.street ||
-        !shippingAddress.city ||
-        !shippingAddress.state ||
-        !shippingAddress.postalCode ||
-        !shippingAddress.country
+        !shippingAddress.city
       ) {
         alert("Please fill out the shipping address.");
         return;
@@ -150,39 +145,6 @@ const Cart = () => {
               value={shippingAddress.city}
               onChange={(e) =>
                 setShippingAddress({ ...shippingAddress, city: e.target.value })
-              }
-              required
-            />
-          </div>
-          <div>
-            <Label htmlFor="state">State</Label>
-            <Input
-              id="state"
-              value={shippingAddress.state}
-              onChange={(e) =>
-                setShippingAddress({ ...shippingAddress, state: e.target.value })
-              }
-              required
-            />
-          </div>
-          <div>
-            <Label htmlFor="postalCode">Postal Code</Label>
-            <Input
-              id="postalCode"
-              value={shippingAddress.postalCode}
-              onChange={(e) =>
-                setShippingAddress({ ...shippingAddress, postalCode: e.target.value })
-              }
-              required
-            />
-          </div>
-          <div>
-            <Label htmlFor="country">Country</Label>
-            <Input
-              id="country"
-              value={shippingAddress.country}
-              onChange={(e) =>
-                setShippingAddress({ ...shippingAddress, country: e.target.value })
               }
               required
             />
