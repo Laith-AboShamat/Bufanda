@@ -17,7 +17,7 @@ const Cart = () => {
   const [shippingAddress, setShippingAddress] = useState({
     street: "",
     city: "",
-    state: "",
+    phoneNumber: "",
   });
 
   const total = cart.cartItems.reduce(
@@ -38,7 +38,8 @@ const Cart = () => {
         router.push("sign-in");
       } else if (
         !shippingAddress.street ||
-        !shippingAddress.city
+        !shippingAddress.city ||
+        !shippingAddress.phoneNumber
       ) {
         alert("Please fill out the shipping address.");
         return;
@@ -124,7 +125,6 @@ const Cart = () => {
           })`}</span>
         </p>
 
-        {/* Shipping Address Form */}
         <div className="space-y-4">
           <p className="text-body-bold">Shipping Address</p>
           <div>
@@ -145,6 +145,17 @@ const Cart = () => {
               value={shippingAddress.city}
               onChange={(e) =>
                 setShippingAddress({ ...shippingAddress, city: e.target.value })
+              }
+              required
+            />
+          </div>
+          <div>
+            <Label htmlFor="phoneNumber">Phone Number</Label>
+            <Input
+              id="phoneNumber"
+              value={shippingAddress.phoneNumber}
+              onChange={(e) =>
+                setShippingAddress({ ...shippingAddress, phoneNumber: e.target.value })
               }
               required
             />
