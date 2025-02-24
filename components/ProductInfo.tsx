@@ -13,6 +13,9 @@ const ProductInfo = ({ productInfo }: { productInfo: ProductType }) => {
   const [selectedSize, setSelectedSize] = useState<string>(
     productInfo.sizes[0]
   );
+  const [selectedMaterial, setSelectedMaterial] = useState<string>(
+    productInfo.material[0] // Initialize with the first material
+  );
   const [quantity, setQuantity] = useState<number>(1);
 
   const cart = useCart();
@@ -74,6 +77,25 @@ const ProductInfo = ({ productInfo }: { productInfo: ProductType }) => {
         </div>
       )}
 
+      {productInfo.material.length > 0 && ( // Add this block for material selection
+        <div className="flex flex-col gap-2">
+          <p className="text-base-medium text-grey-2">Material:</p>
+          <div className="flex gap-2">
+            {productInfo.material.map((material, index) => (
+              <p
+                key={index}
+                className={`border border-black px-2 py-1 rounded-lg cursor-pointer ${
+                  selectedMaterial === material && "bg-black text-white"
+                }`}
+                onClick={() => setSelectedMaterial(material)}
+              >
+                {material}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-col gap-2">
         <p className="text-base-medium text-grey-2">Quantity:</p>
         <div className="flex gap-4 items-center">
@@ -97,6 +119,7 @@ const ProductInfo = ({ productInfo }: { productInfo: ProductType }) => {
             quantity,
             color: selectedColor,
             size: selectedSize,
+            material: selectedMaterial, // Pass the selected material to the cart
           });
         }}
       >

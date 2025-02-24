@@ -88,6 +88,9 @@ const Cart = () => {
                     {cartItem.color && (
                       <p className="text-small-medium">{cartItem.color}</p>
                     )}
+                    {cartItem.material && (
+                      <p className="text-small-medium">{cartItem.material}</p>
+                    )}
                     {cartItem.size && (
                       <p className="text-small-medium">{cartItem.size}</p>
                     )}

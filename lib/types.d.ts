@@ -12,6 +12,7 @@ type ProductType = {
   media: [string];
   category: string;
   collections: [string];
+  material: [string];
   tags: [string];
   price: number;
   cost: number;
@@ -41,6 +42,7 @@ type OrderItemType = {
   product: ProductType;
   color: string;
   size: string;
+  material: string;
   quantity: number;
   _id: string;
 }

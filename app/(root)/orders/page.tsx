@@ -51,6 +51,14 @@ const Orders = async () => {
                         </span>
                       </p>
                     )}
+                    {orderItem.material && (
+                      <p className="text-small-medium">
+                        Material:{" "}
+                        <span className="text-small-bold">
+                          {orderItem.material}
+                        </span>
+                      </p>
+                    )}
                     {orderItem.size && (
                       <p className="text-small-medium">
                         Size:{" "}
