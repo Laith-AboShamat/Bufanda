@@ -21,3 +21,5 @@ const Products = async () => {
 };
 
 export default Products;
+
+export const dynamic = "force-dynamic";

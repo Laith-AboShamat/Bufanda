@@ -34,7 +34,7 @@ const Navbar = () => {
           Home
         </Link>
         <Link
-          href="products"
+          href="/products"
           className={`hover:text-red-1 ${
             pathname === "/products" && "text-red-1"
           }`}
