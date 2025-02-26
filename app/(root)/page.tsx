@@ -1,17 +1,21 @@
 import Collections from "@/components/Collections";
 import ProductList from "@/components/ProductList";
-
-import Image from "next/image";
+import ImageSlider from "@/components/ImageSlider";
+import Footer from "@/components/Footer";
+import AboutUs from "@/components/AboutUs";
+import HijabTutorial from "@/components/HijabTutorial";
 
 export default function Home() {
   return (
     <>
-      <Image src="/banner.png" alt="banner" width={2000} height={1000} className="w-screen" />
+      <ImageSlider />
       <Collections />
       <ProductList />
+      <AboutUs/>
+      <HijabTutorial/>
+      <Footer />
     </>
   );
 }
 
 export const dynamic = "force-dynamic";
-
