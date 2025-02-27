@@ -1,9 +1,10 @@
-"use client"
+"use client";
 
 import { useUser } from "@clerk/nextjs";
 import { Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 interface HeartFavoriteProps {
   product: ProductType;
@@ -56,9 +57,19 @@ const HeartFavorite = ({ product, updateSignedInUser }: HeartFavoriteProps) => {
   };
 
   return (
-    <button onClick={handleLike}>
-      <Heart fill={`${isLiked ? "red" : "white"}`} />
-    </button>
+    <motion.button
+      onClick={handleLike}
+      whileTap={{ scale: 0.8 }}
+      whileHover={{ scale: 1.2 }}
+      className="transition-all duration-300 ease-in-out"
+    >
+      <Heart
+        size={28}
+        className="transition-all duration-300"
+        fill={isLiked ? "red" : "white"}
+        stroke={isLiked ? "red" : "black"}
+      />
+    </motion.button>
   );
 };
 
