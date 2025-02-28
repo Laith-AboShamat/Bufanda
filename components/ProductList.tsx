@@ -1,5 +1,6 @@
 import { getProducts } from "@/lib/actions/actions";
 import ProductCard from "./ProductCard";
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 
 const ProductList = async () => {
   const products = await getProducts();
@@ -10,10 +11,24 @@ const ProductList = async () => {
       {!products || products.length === 0 ? (
         <p className="text-body-bold">No products found</p>
       ) : (
-        <div className="flex flex-wrap justify-center gap-16">
-          {products.map((product: ProductType) => (
-            <ProductCard key={product._id} product={product}/>
-          ))}
+        <div className="w-full max-w-7xl relative">
+          <Carousel className="w-full">
+            <CarouselContent className="-ml-4 select-none"> {/* Disable text selection */}
+              {products.map((product: ProductType) => (
+                <CarouselItem
+                  key={product._id}
+                  className="basis-full md:basis-1/2 lg:basis-1/3 pl-4 select-none" // Disable text selection
+                >
+                  <div className="flex justify-center">
+                    <ProductCard product={product} />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            {/* Navigation Buttons */}
+            <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 transform select-none" /> {/* Disable text selection */}
+            <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 transform select-none" /> {/* Disable text selection */}
+          </Carousel>
         </div>
       )}
     </div>

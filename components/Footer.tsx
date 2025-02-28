@@ -135,8 +135,8 @@ const Footer = () => {
                 bufanda@gmail.com
               </a>
             </p>
-            <p className="text-gray-400 mb-2">Phone: +123 456 7890</p>
-            <p className="text-gray-400 mb-2">Address:<p></p>
+            <p className="text-gray-400 mb-2">Phone: (+970)59-508-3234</p>
+            <p className="text-gray-400 mb-2">Address:
               نابلس مقابل الاكادمية مجمع الحسين التجاري</p>
           </div>
 
