@@ -7,9 +7,10 @@ const ImageSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
-    { src: "/banner.png", alt: "Banner 1" },
-    { src: "/banner2.jpg", alt: "Banner 2" },
-    { src: "/banner3.png", alt: "Banner 3" },
+    { src: "/banner.jpeg", alt: "Banner 1" },
+    { src: "/banner1.jpeg", alt: "Banner 2" },
+    { src: "/banner2.jpeg", alt: "Banner 3" },
+    { src: "/banner3.jpeg", alt: "Banner 4" },
   ];
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const ImageSlider = () => {
             alt={slide.alt}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 100vw"
-            className="object-cover"
+            className="object-contain"
           />
         </div>
       ))}
