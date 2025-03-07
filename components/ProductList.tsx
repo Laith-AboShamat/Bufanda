@@ -13,11 +13,11 @@ const ProductList = async () => {
       ) : (
         <div className="w-full max-w-7xl relative">
           <Carousel className="w-full">
-            <CarouselContent className="-ml-4 select-none"> {/* Disable text selection */}
+            <CarouselContent className="-ml-4 select-none">
               {products.map((product: ProductType) => (
                 <CarouselItem
                   key={product._id}
-                  className="basis-full md:basis-1/2 lg:basis-1/3 pl-4 select-none" // Disable text selection
+                  className="basis-full md:basis-1/2 lg:basis-1/3 pl-4 select-none"
                 >
                   <div className="flex justify-center">
                     <ProductCard product={product} />
@@ -25,9 +25,8 @@ const ProductList = async () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            {/* Navigation Buttons */}
-            <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 transform select-none" /> {/* Disable text selection */}
-            <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 transform select-none" /> {/* Disable text selection */}
+            <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 transform select-none" />
+            <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 transform select-none" />
           </Carousel>
         </div>
       )}
