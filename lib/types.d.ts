@@ -3,6 +3,7 @@ type CollectionType = {
   title: string;
   products: number;
   image: string;
+  category: string[];
 };
 
 type ProductType = {

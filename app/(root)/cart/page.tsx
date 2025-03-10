@@ -163,6 +163,11 @@ const Cart = () => {
               required
             />
           </div>
+          <div className="flex align-middle justify-end">
+            <p>
+              التوصيل للضفة وقراها ₪20 و للداخل المحتل ₪70
+            </p>
+          </div>
         </div>
 
         <div className="flex justify-between text-body-semibold">
