@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { Lumiflex } from "uvcanvas";
 
 const ImageSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -34,7 +35,11 @@ const ImageSlider = () => {
   };
 
   return (
-    <div className="w-full relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden">
+    <div className="w-full relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden rounded-lg shadow-2xl">
+      <div className="hidden md:block absolute inset-0 z-0">
+        <Lumiflex />
+      </div>
+
       {slides.map((slide, index) => (
         <div
           key={index}
@@ -47,34 +52,72 @@ const ImageSlider = () => {
             alt={slide.alt}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 100vw"
-            className="object-contain"
+            className="object-cover md:object-contain"
+            priority={index === currentSlide}
           />
         </div>
       ))}
 
+      <div
+        className="hidden md:block absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-white/50 to-transparent z-10 pointer-events-none"
+        aria-hidden="true"
+      />
+      <div
+        className="hidden md:block absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-white/50 to-transparent z-10 pointer-events-none"
+        aria-hidden="true"
+      />
+
       <button
         onClick={prevSlide}
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-all duration-300"
+        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white text-black p-3 rounded-full hover:bg-black hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl z-20"
         aria-label="Previous Slide"
       >
-        &larr;
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
       </button>
       <button
         onClick={nextSlide}
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-all duration-300"
+        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white text-black p-3 rounded-full hover:bg-black hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl z-20"
         aria-label="Next Slide"
       >
-        &rarr;
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
       </button>
 
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full ${
-              currentSlide === index ? "bg-white" : "bg-gray-500"
-            } hover:bg-white transition-all duration-300`}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              currentSlide === index
+                ? "bg-white scale-125 shadow-lg"
+                : "bg-gray-500 hover:bg-white"
+            }`}
             aria-label={`Go to Slide ${index + 1}`}
           />
         ))}

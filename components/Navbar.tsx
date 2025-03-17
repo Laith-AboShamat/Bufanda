@@ -19,6 +19,9 @@ const Navbar = () => {
   const [productsDropdown, setProductsDropdown] = useState(false);
   const [query, setQuery] = useState("");
   const [collections, setCollections] = useState<CollectionType[]>([]);
+  const [categoryDropdowns, setCategoryDropdowns] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   useEffect(() => {
     const fetchCollections = async () => {
@@ -29,6 +32,13 @@ const Navbar = () => {
   }, []);
 
   const categories = ["Abaya", "Hijab", "Clothes", "Offers"];
+
+  const toggleCategoryDropdown = (category: string) => {
+    setCategoryDropdowns((prev) => ({
+      ...prev,
+      [category]: !prev[category],
+    }));
+  };
 
   return (
     <div className="sticky top-0 z-10 py-2 px-10 flex gap-2 justify-between items-center bg-white max-sm:px-2">
@@ -55,7 +65,6 @@ const Navbar = () => {
           </button>
           {productsDropdown && (
             <div className="absolute bg-white border border-gray-200 rounded-lg shadow-lg mt-2 w-48">
-
               <Link
                 href="/products"
                 className="block px-4 py-2 hover:bg-gray-100 font-semibold"
@@ -64,33 +73,36 @@ const Navbar = () => {
                 Filter
               </Link>
 
+              {/* Divider */}
               <div className="border-t border-gray-200 my-1"></div>
 
+              {/* Categories as a List */}
               {categories.map((category) => (
-                <div key={category} className="relative">
-                  <Link
-                    href={`category/${category.toLowerCase()}`}
-                    className="block px-4 py-2 hover:bg-gray-100"
-                    onClick={() => setProductsDropdown(false)} 
+                <div key={category}>
+                  <button
+                    className="block px-4 py-2 hover:bg-gray-100 w-full text-left"
+                    onClick={() => toggleCategoryDropdown(category)}
                   >
                     {category}
-                  </Link>
-                  <div className="ml-4">
-                    {collections
-                      .filter((collection) =>
-                        collection.category.includes(category)
-                      )
-                      .map((collection) => (
-                        <Link
-                          key={collection._id}
-                          href={`/collections/${collection._id}`}
-                          className="block px-4 py-2 hover:bg-gray-100 text-sm"
-                          onClick={() => setProductsDropdown(false)}
-                        >
-                          {collection.title}
-                        </Link>
-                      ))}
-                  </div>
+                  </button>
+                  {categoryDropdowns[category] && (
+                    <div className="ml-4">
+                      {collections
+                        .filter((collection) =>
+                          collection.category.includes(category)
+                        )
+                        .map((collection) => (
+                          <Link
+                            key={collection._id}
+                            href={`/collections/${collection._id}`}
+                            className="block px-4 py-2 hover:bg-gray-100 text-sm"
+                            onClick={() => setProductsDropdown(false)}
+                          >
+                            {collection.title}
+                          </Link>
+                        ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -136,7 +148,7 @@ const Navbar = () => {
           className="flex items-center gap-3 border rounded-lg px-2 py-1 hover:bg-black hover:text-white max-md:hidden"
         >
           <ShoppingCart />
-          <p className="text-base-bold">Cart ({cart.cartItems.length})</p>
+          <p className="text-base-bold">({cart.cartItems.length})</p>
         </Link>
 
         <Menu
@@ -154,23 +166,21 @@ const Navbar = () => {
               Home
             </Link>
 
-            {/* Products Dropdown for Mobile */}
             <div className="relative">
               <button
                 className="hover:text-red-1 w-full text-left"
-                onClick={() => setProductsDropdown(!productsDropdown)} // Toggle dropdown on click
+                onClick={() => setProductsDropdown(!productsDropdown)}
               >
                 Products
               </button>
-              {productsDropdown && ( // Show dropdown if productsDropdown is true
-                <div className="mt-2 bg-white border border-gray-200 rounded-lg shadow-lg">
-                  {/* First item: Filter */}
+              {productsDropdown && (
+                <div className="mt-2 bg-white">
                   <Link
                     href="/products"
                     className="block px-4 py-2 hover:bg-gray-100 font-semibold"
                     onClick={() => {
-                      setProductsDropdown(false); // Close dropdown on link click
-                      setDropdownMenu(false); // Close mobile menu
+                      setProductsDropdown(false);
+                      setDropdownMenu(false);
                     }}
                   >
                     Filter
@@ -179,39 +189,38 @@ const Navbar = () => {
                   {/* Divider */}
                   <div className="border-t border-gray-200 my-1"></div>
 
-                  {/* Categories */}
+                  {/* Categories as a Simple List */}
                   {categories.map((category) => (
-                    <div key={category} className="relative">
-                      <Link
-                        href={`/collections/category/${category.toLowerCase()}`}
-                        className="block px-4 py-2 hover:bg-gray-100"
-                        onClick={() => {
-                          setProductsDropdown(false); // Close dropdown on link click
-                          setDropdownMenu(false); // Close mobile menu
-                        }}
+                    <div key={category}>
+                      <button
+                        className="block px-4 py-2 hover:bg-gray-100 w-full text-left"
+                        onClick={() => toggleCategoryDropdown(category)}
                       >
                         {category}
-                      </Link>
-                      {/* Submenu for collections in this category */}
-                      <div className="ml-4">
-                        {collections
-                          .filter((collection) =>
-                            collection.category.includes(category)
-                          )
-                          .map((collection) => (
-                            <Link
-                              key={collection._id}
-                              href={`/collections/${collection._id}`}
-                              className="block px-4 py-2 hover:bg-gray-100 text-sm"
-                              onClick={() => {
-                                setProductsDropdown(false); // Close dropdown on link click
-                                setDropdownMenu(false); // Close mobile menu
-                              }}
-                            >
-                              {collection.title}
-                            </Link>
-                          ))}
-                      </div>
+                      </button>
+                      {categoryDropdowns[category] && (
+                        <div className="ml-0">
+                          {" "}
+                          {/* Remove left margin */}
+                          {collections
+                            .filter((collection) =>
+                              collection.category.includes(category)
+                            )
+                            .map((collection) => (
+                              <Link
+                                key={collection._id}
+                                href={`/collections/${collection._id}`}
+                                className="block px-4 py-2 hover:bg-gray-100 text-sm"
+                                onClick={() => {
+                                  setProductsDropdown(false);
+                                  setDropdownMenu(false);
+                                }}
+                              >
+                                {collection.title}
+                              </Link>
+                            ))}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -221,24 +230,24 @@ const Navbar = () => {
             <Link
               href={user ? "/wishlist" : "/sign-in"}
               className="hover:text-red-1"
-              onClick={() => setDropdownMenu(false)} // Close mobile menu on link click
+              onClick={() => setDropdownMenu(false)}
             >
               Wishlist
             </Link>
             <Link
               href={user ? "/orders" : "/sign-in"}
               className="hover:text-red-1"
-              onClick={() => setDropdownMenu(false)} // Close mobile menu on link click
+              onClick={() => setDropdownMenu(false)}
             >
               Orders
             </Link>
             <Link
               href="/cart"
               className="flex items-center gap-3 border rounded-lg px-2 py-1 hover:bg-black hover:text-white"
-              onClick={() => setDropdownMenu(false)} // Close mobile menu on link click
+              onClick={() => setDropdownMenu(false)}
             >
               <ShoppingCart />
-              <p className="text-base-bold">Cart ({cart.cartItems.length})</p>
+              <p className="text-base-bold">({cart.cartItems.length})</p>
             </Link>
           </div>
         )}
