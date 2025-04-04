@@ -12,39 +12,65 @@ const Collections = async () => {
       {!collections || collections.length === 0 ? (
         <p className="text-body-bold">No collections found</p>
       ) : (
-        <div className="w-full max-w-7xl relative">
-          <Carousel className="w-full">
-            <CarouselContent className="-ml-4 select-none">
-              {collections.map((collection: CollectionType) => (
-                <CarouselItem
-                  key={collection._id}
-                  className="basis-full md:basis-1/2 lg:basis-1/3 pl-4 select-none"
-                >
-                  <div className="flex justify-center">
-                    <Link href={`/collections/${collection._id}`}>
-                      <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <Image
-                          src={collection.image}
-                          alt={collection.title}
-                          width={350}
-                          height={200}
-                          className="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-300"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <h3 className="text-xl font-semibold">{collection.title}</h3>
-                          <p className="text-sm">Explore now →</p>
+        <>
+          {/* Mobile Grid View (hidden on larger screens) */}
+          <div className="w-full grid grid-cols-3 gap-4 md:hidden">
+            {collections.map((collection: CollectionType) => (
+              <Link 
+                key={collection._id} 
+                href={`/collections/${collection._id}`}
+                className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              >
+                <Image
+                  src={collection.image}
+                  alt={collection.title}
+                  width={350}
+                  height={200}
+                  className="w-full h-32 object-cover transform group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-2 left-2 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <h3 className="text-sm font-semibold line-clamp-1">{collection.title}</h3>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Desktop Carousel View (hidden on mobile) */}
+          <div className="w-full max-w-7xl relative hidden md:block">
+            <Carousel className="w-full">
+              <CarouselContent className="-ml-4 select-none">
+                {collections.map((collection: CollectionType) => (
+                  <CarouselItem
+                    key={collection._id}
+                    className="basis-full md:basis-1/2 lg:basis-1/3 pl-4 select-none"
+                  >
+                    <div className="flex justify-center">
+                      <Link href={`/collections/${collection._id}`}>
+                        <div className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                          <Image
+                            src={collection.image}
+                            alt={collection.title}
+                            width={350}
+                            height={200}
+                            className="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-300"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <h3 className="text-xl font-semibold">{collection.title}</h3>
+                            <p className="text-sm">Explore now →</p>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 transform select-none" />
-            <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 transform select-none" />
-          </Carousel>
-        </div>
+                      </Link>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 transform select-none" />
+              <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 transform select-none" />
+            </Carousel>
+          </div>
+        </>
       )}
     </div>
   );

@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import MobileSidebar from "./MobileSidebar";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -41,7 +42,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="sticky top-0 z-10 py-2 px-10 flex gap-2 justify-between items-center bg-white max-sm:px-2">
+    <div className="sticky top-0 z-[50] py-2 px-10 flex gap-2 justify-between items-center bg-white max-sm:px-2">
       <Link href="/">
         <Image src="/logo.png" alt="logo" width={130} height={100} />
       </Link>
@@ -64,7 +65,7 @@ const Navbar = () => {
             Products
           </button>
           {productsDropdown && (
-            <div className="absolute bg-white border border-gray-200 rounded-lg shadow-lg mt-2 w-48">
+            <div className="absolute bg-white border border-gray-200 rounded-lg shadow-lg mt-2 w-48 z-[60]">
               <Link
                 href="/products"
                 className="block px-4 py-2 hover:bg-gray-100 font-semibold"
@@ -73,10 +74,8 @@ const Navbar = () => {
                 Filter
               </Link>
 
-              {/* Divider */}
               <div className="border-t border-gray-200 my-1"></div>
 
-              {/* Categories as a List */}
               {categories.map((category) => (
                 <div key={category}>
                   <button
@@ -152,105 +151,22 @@ const Navbar = () => {
         </Link>
 
         <Menu
-          className="cursor-pointer lg:hidden"
-          onClick={() => setDropdownMenu(!dropdownMenu)}
+          className="cursor-pointer lg:hidden z-[50]"
+          onClick={() => setDropdownMenu(true)}
         />
 
-        {dropdownMenu && (
-          <div className="absolute top-12 right-5 flex flex-col gap-4 p-3 rounded-lg border bg-white text-base-bold lg:hidden">
-            <Link
-              href="/"
-              className="hover:text-red-1"
-              onClick={() => setDropdownMenu(false)}
-            >
-              Home
-            </Link>
-
-            <div className="relative">
-              <button
-                className="hover:text-red-1 w-full text-left"
-                onClick={() => setProductsDropdown(!productsDropdown)}
-              >
-                Products
-              </button>
-              {productsDropdown && (
-                <div className="mt-2 bg-white">
-                  <Link
-                    href="/products"
-                    className="block px-4 py-2 hover:bg-gray-100 font-semibold"
-                    onClick={() => {
-                      setProductsDropdown(false);
-                      setDropdownMenu(false);
-                    }}
-                  >
-                    Filter
-                  </Link>
-
-                  {/* Divider */}
-                  <div className="border-t border-gray-200 my-1"></div>
-
-                  {/* Categories as a Simple List */}
-                  {categories.map((category) => (
-                    <div key={category}>
-                      <button
-                        className="block px-4 py-2 hover:bg-gray-100 w-full text-left"
-                        onClick={() => toggleCategoryDropdown(category)}
-                      >
-                        {category}
-                      </button>
-                      {categoryDropdowns[category] && (
-                        <div className="ml-0">
-                          {" "}
-                          {/* Remove left margin */}
-                          {collections
-                            .filter((collection) =>
-                              collection.category.includes(category)
-                            )
-                            .map((collection) => (
-                              <Link
-                                key={collection._id}
-                                href={`/collections/${collection._id}`}
-                                className="block px-4 py-2 hover:bg-gray-100 text-sm"
-                                onClick={() => {
-                                  setProductsDropdown(false);
-                                  setDropdownMenu(false);
-                                }}
-                              >
-                                {collection.title}
-                              </Link>
-                            ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <Link
-              href={user ? "/wishlist" : "/sign-in"}
-              className="hover:text-red-1"
-              onClick={() => setDropdownMenu(false)}
-            >
-              Wishlist
-            </Link>
-            <Link
-              href={user ? "/orders" : "/sign-in"}
-              className="hover:text-red-1"
-              onClick={() => setDropdownMenu(false)}
-            >
-              Orders
-            </Link>
-            <Link
-              href="/cart"
-              className="flex items-center gap-3 border rounded-lg px-2 py-1 hover:bg-black hover:text-white"
-              onClick={() => setDropdownMenu(false)}
-            >
-              <ShoppingCart />
-              <p className="text-base-bold">({cart.cartItems.length})</p>
-            </Link>
-          </div>
-        )}
+        <MobileSidebar
+          isOpen={dropdownMenu}
+          onClose={() => setDropdownMenu(false)}
+          user={user}
+          cartItemsLength={cart.cartItems.length}
+          categories={categories}
+          collections={collections}
+          productsDropdown={productsDropdown}
+          setProductsDropdown={setProductsDropdown}
+          categoryDropdowns={categoryDropdowns}
+          toggleCategoryDropdown={toggleCategoryDropdown}
+        />
 
         {user ? (
           <UserButton afterSignOutUrl="/sign-in" />
