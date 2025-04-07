@@ -1,7 +1,13 @@
 import { getCollections } from "@/lib/actions/actions";
 import Image from "next/image";
 import Link from "next/link";
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui/carousel";
 
 const Collections = async () => {
   const collections = await getCollections();
@@ -13,11 +19,10 @@ const Collections = async () => {
         <p className="text-body-bold">No collections found</p>
       ) : (
         <>
-          {/* Mobile Grid View (hidden on larger screens) */}
           <div className="w-full grid grid-cols-3 gap-4 md:hidden">
             {collections.map((collection: CollectionType) => (
-              <Link 
-                key={collection._id} 
+              <Link
+                key={collection._id}
                 href={`/collections/${collection._id}`}
                 className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
@@ -30,13 +35,14 @@ const Collections = async () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-2 left-2 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <h3 className="text-sm font-semibold line-clamp-1">{collection.title}</h3>
+                  <h3 className="text-sm font-semibold line-clamp-1">
+                    {collection.title}
+                  </h3>
                 </div>
               </Link>
             ))}
           </div>
 
-          {/* Desktop Carousel View (hidden on mobile) */}
           <div className="w-full max-w-7xl relative hidden md:block">
             <Carousel className="w-full">
               <CarouselContent className="-ml-4 select-none">
@@ -57,7 +63,9 @@ const Collections = async () => {
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                           <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <h3 className="text-xl font-semibold">{collection.title}</h3>
+                            <h3 className="text-xl font-semibold">
+                              {collection.title}
+                            </h3>
                             <p className="text-sm">Explore now →</p>
                           </div>
                         </div>
