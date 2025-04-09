@@ -1,5 +1,4 @@
 import { getOrders } from "@/lib/actions/actions";
-
 import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 
@@ -7,14 +6,15 @@ const Orders = async () => {
   const { userId } = auth();
   const orders = await getOrders(userId as string);
 
-
   return (
     <div className="px-10 py-5 max-sm:px-3">
-      <p className="text-heading3-bold my-10">Your Orders</p>
-      {!orders ||
-        (orders.length === 0 && (
-          <p className="text-body-bold my-5">You have no orders yet.</p>
-        ))}
+      <div className="text-center">
+        <p className="text-heading3-bold my-10">Your Orders / طلباتك</p>
+        {!orders ||
+          (orders.length === 0 && (
+            <p className="text-body-bold my-5">You have no orders yet. / ليس لديك أي طلبات بعد</p>
+          ))}
+      </div>
 
       <div className="flex flex-col gap-10">
         {orders?.map((order: OrderType) => (

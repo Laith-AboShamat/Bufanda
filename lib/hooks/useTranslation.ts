@@ -18,7 +18,8 @@ const translations = {
     abaya: "Abaya",
     hijab: "Hijab",
     clothes: "Clothes",
-    offers: "Offers"
+    offers: "Offers",
+    relatedProducts: "Related Products"
   },
   ar: {
     home: "الرئيسية",
@@ -35,7 +36,8 @@ const translations = {
     abaya: "عبايات",
     hijab: "حجاب",
     clothes: "ملابس",
-    offers: "عروض"
+    offers: "عروض",
+    relatedProducts: "منتجات ذات صلة"
   }
 } as const;
 

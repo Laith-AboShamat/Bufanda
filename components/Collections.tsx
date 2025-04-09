@@ -1,3 +1,5 @@
+'use client';
+
 import { getCollections } from "@/lib/actions/actions";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,19 +10,20 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
+import { useTranslation } from "@/lib/hooks/useTranslation";
 
-const Collections = async () => {
-  const collections = await getCollections();
+function CollectionsContent({ collections }: { collections: CollectionType[] }) {
+  const { t, isArabic } = useTranslation();
 
   return (
     <div className="flex flex-col items-center gap-10 py-20 px-5 bg-gray-50">
-      <p className="text-heading2-bold">Collections</p>
+      <p className="text-heading2-bold">{isArabic ? "المجموعات" : "Collections"}</p>
       {!collections || collections.length === 0 ? (
-        <p className="text-body-bold">No collections found</p>
+        <p className="text-body-bold">{isArabic ? "لا توجد مجموعات" : "No collections found"}</p>
       ) : (
         <>
           <div className="w-full grid grid-cols-3 gap-4 md:hidden">
-            {collections.map((collection: CollectionType) => (
+            {collections.map((collection) => (
               <Link
                 key={collection._id}
                 href={`/collections/${collection._id}`}
@@ -46,7 +49,7 @@ const Collections = async () => {
           <div className="w-full max-w-7xl relative hidden md:block">
             <Carousel className="w-full">
               <CarouselContent className="-ml-4 select-none">
-                {collections.map((collection: CollectionType) => (
+                {collections.map((collection) => (
                   <CarouselItem
                     key={collection._id}
                     className="basis-full md:basis-1/2 lg:basis-1/3 pl-4 select-none"
@@ -66,7 +69,7 @@ const Collections = async () => {
                             <h3 className="text-xl font-semibold">
                               {collection.title}
                             </h3>
-                            <p className="text-sm">Explore now →</p>
+                            <p className="text-sm">{isArabic ? "استكشف الآن →" : "Explore now →"}</p>
                           </div>
                         </div>
                       </Link>
@@ -82,6 +85,11 @@ const Collections = async () => {
       )}
     </div>
   );
+}
+const Collections = async () => {
+  const collections = await getCollections();
+  
+  return <CollectionsContent collections={collections} />;
 };
 
 export default Collections;

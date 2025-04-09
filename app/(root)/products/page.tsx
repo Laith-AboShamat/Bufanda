@@ -6,8 +6,10 @@ import ProductCard from "@/components/ProductCard";
 import { Sliders, X } from "lucide-react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import { useTranslation } from "@/lib/hooks/useTranslation";
 
 const Products = () => {
+  const { isArabic } = useTranslation();
   const [products, setProducts] = useState<ProductType[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 300]);
@@ -54,7 +56,7 @@ const Products = () => {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <Sliders className="w-6 h-6 text-gray-700" />
-            <h2 className="text-xl font-semibold">Filters</h2>
+            <h2 className="text-xl font-semibold">{isArabic ? "الفلاتر" : "Filters"}</h2>
           </div>
           <button onClick={() => setIsFiltersOpen(false)} className="lg:hidden p-2 rounded-full bg-gray-100 hover:bg-gray-200">
             <X className="w-4 h-4" />
@@ -62,7 +64,7 @@ const Products = () => {
         </div>
 
         <div className="mb-6">
-          <h3 className="text-lg font-medium mb-3">Category</h3>
+          <h3 className="text-lg font-medium mb-3">{isArabic ? "الفئة" : "Category"}</h3>
           <div className="flex flex-wrap gap-2">
             {uniqueCategories.map((category, index) => (
               <button
@@ -85,7 +87,7 @@ const Products = () => {
         </div>
 
         <div className="mb-6">
-          <h3 className="text-lg font-medium mb-3">Price Range</h3>
+          <h3 className="text-lg font-medium mb-3">{isArabic ? "نطاق السعر" : "Price Range"}</h3>
           <div className="px-2">
             <Slider
               range
@@ -108,7 +110,7 @@ const Products = () => {
         </div>
 
         <div className="mb-6">
-          <h3 className="text-lg font-medium mb-3">Colors</h3>
+          <h3 className="text-lg font-medium mb-3">{isArabic ? "الألوان" : "Colors"}</h3>
           <div className="flex flex-wrap gap-2">
             {uniqueColors.map((color, index) => (
               <button
@@ -131,7 +133,7 @@ const Products = () => {
         </div>
 
         <div className="mb-6 mt-6">
-          <h3 className="text-lg font-medium mb-3">Sizes</h3>
+          <h3 className="text-lg font-medium mb-3">{isArabic ? "المقاسات" : "Sizes"}</h3>
           <div className="flex flex-wrap gap-2">
             {uniqueSizes.map((size, index) => (
               <button
@@ -163,7 +165,7 @@ const Products = () => {
         </button>
 
         {!filteredProducts || filteredProducts.length === 0 ? (
-          <p className="text-body-bold">No products found</p>
+          <p className="text-body-bold">{isArabic ? "لا توجد منتجات" : "No products found"}</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 justify-center">
             {filteredProducts.map((product: ProductType) => (
