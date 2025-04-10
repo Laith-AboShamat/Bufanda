@@ -1,18 +1,15 @@
-'use client';
-
+import { getProducts } from "@/lib/actions/actions";
 import ProductCard from "./ProductCard";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
-import { getProducts } from "@/lib/actions/actions";
-import { useTranslation } from "@/lib/hooks/useTranslation";
 
-function ProductListContent({ products }: { products: ProductType[] }) {
-  const { isArabic } = useTranslation();
+const ProductList = async () => {
+  const products = await getProducts();
 
   return (
     <div className="flex flex-col items-center gap-10 py-20 px-5 bg-gray-50">
-      <p className="text-heading2-bold">{isArabic ? "أحدث الوصولات" : "Latest Arrivals"}</p>
+      <p className="text-heading2-bold">Latest Arrivals</p>
       {!products || products.length === 0 ? (
-        <p className="text-body-bold">{isArabic ? "لا توجد منتجات" : "No products found"}</p>
+        <p className="text-body-bold">No products found</p>
       ) : (
         <div className="w-full max-w-7xl relative">
           <Carousel className="w-full">
@@ -35,12 +32,6 @@ function ProductListContent({ products }: { products: ProductType[] }) {
       )}
     </div>
   );
-}
-
-const ProductList = async () => {
-  const products = await getProducts();
-  
-  return <ProductListContent products={products} />;
 };
 
 export default ProductList;
